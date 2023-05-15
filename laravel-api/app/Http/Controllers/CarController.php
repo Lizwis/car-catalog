@@ -10,8 +10,9 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::all();
+        $count = $cars->count();
 
-        return response()->json($cars, 200);
+        return response()->json(compact('cars', 'count'), 200);
     }
 
     public function show($car_id)
