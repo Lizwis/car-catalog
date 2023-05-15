@@ -9,7 +9,17 @@ class CarController extends Controller
 {
     public function index()
     {
-        $cars = Car::all();
+        $makeFilter = request()->makeFilter;
+        $sortPrice = request()->sortPrice;
+
+        $newmakeFilter = array_filter($makeFilter ?? []);
+
+        $cars = Car::when(!empty($newmakeFilter), function ($query) use ($newmakeFilter) {
+            return $query->whereIn('make', $newmakeFilter);
+        })
+            ->orderBy('price', $sortPrice)
+            ->get();
+
         $count = $cars->count();
 
         return response()->json(compact('cars', 'count'), 200);

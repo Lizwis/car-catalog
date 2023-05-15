@@ -24,7 +24,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'catalog/cars'], function () {
-    Route::get('/', [CarController::class, 'index']);
+    Route::post('/', [CarController::class, 'index']);
     Route::get('/show/{car_id}', [CarController::class, 'show']);
 });
 

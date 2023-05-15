@@ -12,6 +12,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
+              @click="getCars"
             />
           </el-select>
         </div>
@@ -24,6 +25,7 @@
     >
       <div class="col-12"><img :src="car.image" /></div>
       <span class="px-2">{{ car.make }}</span>
+      <span class="px-2">{{ car.price }}</span>
     </div>
   </div>
 </template>
@@ -42,7 +44,7 @@ export default defineComponent({
   setup(props) {
     const cars = ref<Array<any> | null>(null)
     const carsCount = ref(0)
-    const sortValue = ref('Price ( Low to High )')
+    const sortValue = ref('asc')
     const options = [
       {
         value: 'desc',
@@ -54,7 +56,10 @@ export default defineComponent({
       }
     ]
     const getCars = async () => {
-      const response = await Catalog.listCatelog()
+      const response = await Catalog.listCatelog({
+        makeFilter: props.selectedMakeFilter,
+        sortPrice: sortValue.value
+      })
       cars.value = response.data.cars
       carsCount.value = response.data.count
     }
@@ -69,7 +74,8 @@ export default defineComponent({
       cars,
       carsCount,
       sortValue,
-      options
+      options,
+      getCars
     }
   }
 })

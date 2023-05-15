@@ -1,9 +1,10 @@
 import Axios from "./Axios";
 
 export default {
-  listCatelog(): Promise<any> {
-    return Axios().get("api/catalog/cars");
+  listCatelog(makeFilter:any): Promise<any> {
+    return Axios().post("api/catalog/cars", makeFilter);
   },
+
   listCategories(): Promise<any> {
     return Axios().get("api/catalog/category");
   },
