@@ -16,4 +16,4 @@
 - navigate to the `vue-app` directory
 - `npm install`
 - `npm run dev`
-- You can access the project at: `http://localhost:5173`
+- You can access the project at: `http://localhost:3000`

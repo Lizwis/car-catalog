@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FiltersController;
+use App\Http\Controllers\SoapController;
+
+
 
 
 /*
@@ -26,6 +29,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::group(['prefix' => 'catalog/cars'], function () {
     Route::post('/', [CarController::class, 'index']);
     Route::get('/show/{car_id}', [CarController::class, 'show']);
+    Route::post('/update/{car_id}', [CarController::class, 'update']);
 });
 
 Route::group(['prefix' => 'catalog/category'], function () {
@@ -34,4 +38,9 @@ Route::group(['prefix' => 'catalog/category'], function () {
 
 Route::group(['prefix' => 'filter'], function () {
     Route::get('/make', [FiltersController::class, 'makeFilter']);
+    Route::get('/year', [FiltersController::class, 'yearFilter']);
+});
+
+Route::group(['prefix' => 'soap'], function () {
+    Route::get('/', [SoapController::class, 'index']);
 });

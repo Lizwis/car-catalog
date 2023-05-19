@@ -9,14 +9,17 @@ class CarController extends Controller
 {
     public function index()
     {
-        $makeFilter = request()->makeFilter;
         $sortPrice = request()->sortPrice;
 
-        $newmakeFilter = array_filter($makeFilter ?? []);
+        $newMakeFilter = array_filter(request()->makeFilter ?? []);
+        $newYearFilter = array_filter(request()->yearFilter ?? []);
 
-        $cars = Car::when(!empty($newmakeFilter), function ($query) use ($newmakeFilter) {
-            return $query->whereIn('make', $newmakeFilter);
+        $cars = Car::when(!empty($newMakeFilter), function ($query) use ($newMakeFilter) {
+            return $query->whereIn('make', $newMakeFilter);
         })
+            ->when(!empty($newYearFilter), function ($query) use ($newYearFilter) {
+                return $query->whereIn('year', $newYearFilter);
+            })
             ->orderBy('price', $sortPrice)
             ->get();
 
@@ -28,6 +31,22 @@ class CarController extends Controller
     public function show($car_id)
     {
         $car = Car::find($car_id);
+
+        return response()->json($car, 200);
+    }
+
+    public function update($car_id)
+    {
+
+        $validated = request()->validate([
+            'price' => 'required|numeric',
+        ]);
+        $car = Car::find($car_id);
+
+        $car->update([
+            'price' => $validated['price'],
+
+        ]);
 
         return response()->json($car, 200);
     }

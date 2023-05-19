@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('image');
             $table->integer('year');
             $table->float('price');
+            $table->bigInteger('mileage');
+            $table->string('transmission');
+            $table->string('fuel_type');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
 

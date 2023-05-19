@@ -11,7 +11,7 @@ class Car extends Model
 
     protected $table = 'cars';
 
-    protected $fillable = ['make', 'model', 'image', 'year', 'price', 'category_id'];
+    protected $fillable = ['make', 'model', 'image', 'year', 'price', 'category_id', 'mileage', 'transmission', 'fuel_type'];
 
     public function category()
     {

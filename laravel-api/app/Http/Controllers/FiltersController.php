@@ -8,8 +8,15 @@ class FiltersController extends Controller
 {
     public function makeFilter()
     {
-        $categories = Car::select('make')->distinct()->get();
+        $make = Car::select('make')->distinct()->get();
 
-        return response()->json($categories, 200);
+        return response()->json($make, 200);
+    }
+
+    public function yearFilter()
+    {
+        $year = Car::select('year')->distinct()->get();
+
+        return response()->json($year, 200);
     }
 }

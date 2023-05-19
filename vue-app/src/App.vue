@@ -21,4 +21,18 @@ import navBar from './components/navBar.vue'
 .grey-text-light {
   color: #d6d3d3;
 }
+/* html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+} */
+
+.img {
+  background-color: #f2f2f2;
+}
+
+.price {
+  font-weight: 600;
+}
 </style>

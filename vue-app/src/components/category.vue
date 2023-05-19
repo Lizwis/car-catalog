@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 pt-3">
+  <div class="col-12 pt-3 pb-5">
     <div class="row mx-0">
       <div class="col-1 px-0 mx-0 pt-2">
         <el-button class="homeButton px-0" :icon="ElemeFilled"></el-button>
@@ -8,8 +8,10 @@
         <div class="d-flex justify-content-end">
           <div
             class="category-wrapper mx-1 px-2 py-2 rounded text-center"
+            @click="filterCategory(category.id)"
             v-for="(category, key) in categories"
             :key="key"
+            :class="{ selected: category.id === selectedCategory }"
           >
             <span>
               <img :src="'src/assets/' + category.name + '.svg'" />
@@ -33,12 +35,20 @@ export default defineComponent({
   name: 'NavBar',
   components: { ElButton },
 
-  setup() {
+  emits: ['categorySelected'],
+
+  setup(_, { emit }) {
     const categories = ref<Array<any> | null>(null)
+    const selectedCategory = ref(null)
 
     const getCategories = async () => {
       const response = await Catalog.listCategories()
       categories.value = response.data
+    }
+
+    const filterCategory = async (category: any) => {
+      selectedCategory.value = category
+      emit('categorySelected', selectedCategory.value)
     }
 
     onMounted(async () => {
@@ -46,7 +56,9 @@ export default defineComponent({
     })
     return {
       categories,
-      ElemeFilled
+      ElemeFilled,
+      filterCategory,
+      selectedCategory
     }
   }
 })
@@ -73,5 +85,8 @@ export default defineComponent({
   border: none;
   color: #409eff;
   font-size: 50px;
+}
+.category-wrapper.selected {
+  background-color: #409eff; /* Replace with your desired color */
 }
 </style>
